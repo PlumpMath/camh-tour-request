@@ -1,0 +1,4 @@
+name = CAMH Tour Request 
+description = A Tour Request System for Exhibitions
+package = 501
+core = 6.x

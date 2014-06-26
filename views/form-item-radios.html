@@ -1,0 +1,14 @@
+<div ng-hide="item.hide" class="form-group" ng-class="valid"> 
+	<label class="col-sm-3 control-label">{{item.name}} </label>
+	<div class="col-sm-9">
+		<div ng-repeat="value in item.values">
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="item.inputValue" id="" value="{{value}}" ng-checked="selected[value]">
+					{{value}}
+				</label>
+			</div>
+		</div>
+		<span class="help-block">{{item.help}}</span>
+	</div>
+</div>

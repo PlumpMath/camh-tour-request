@@ -1,0 +1,36 @@
+<h2>Administer Tour Requests</h2>
+<div>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests')">Manage Requests</a></h4>
+  <h4 class="pull-left">&nbsp;|&nbsp;</h4>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests/index')">Index of Requests</a></h4>
+  <h4 class="pull-right" ng-hide="hideOld"><a href ng-click="hideOld = true;">Hide Old Requests</a></h4>
+  <h4 class="pull-right" ng-show="hideOld"><a href ng-click="hideOld = false;">Show Old Requests</a></h4>
+</div>
+<hr>
+<div ng-show="!loaded">
+  <h4>Loading . . . </h4>
+</div>
+<table style="padding-top: 30px;" ng-show="loaded != undefined" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Exhibition</th>
+      <th>Workshop</th>
+      <th>Leader</th>
+      <th>Group</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="r in requests | orderBy:'datetime'" ng-hide="r.old && hideOld">
+      <td>{{r.date}}</td>
+      <td>{{r.time}}</td>
+      <td style="max-width: 50px;">{{r.misc_info.visit.exhibition}}</td>
+      <td>{{r.workshop}}</td>
+      <td>{{r.contact_name}}</td>
+      <td>{{r.organization_name}}</td>
+      <td><a ng-href="http://staging.camh.org/admin/tour-request/#/requests/{{r.id}}">view</a></td>
+    </tr>
+  </tbody>
+</table>

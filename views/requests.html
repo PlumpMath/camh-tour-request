@@ -1,0 +1,62 @@
+<h2>Manage Requests</h2>
+<div>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests')">Manage Requests</a></h4>
+  <h4 class="pull-left">&nbsp;|&nbsp;</h4>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests/index')">Index of Requests</a></h4>
+</div>
+<hr>
+<form ng-init="admin = 1" class="form-horizontal" role="form">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Requests Information</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group"> 
+        <label class="col-sm-3 control-label">Date</label>
+        <div class="col-sm-9">
+              <div ng-change="dateChange()" ng-model="form.date">
+                <datepicker show-weeks="false"></datepicker>
+              </div>
+        </div>
+      </div>
+      <div ng-repeat="field in form.visit">
+        <div form-item item="field" change="formChange()"></div>
+      </div>
+      <div style="position: relative;" class="form-group"> 
+        <label class="col-sm-3 control-label">Available Times</label>
+        <div class="col-sm-9">
+          <div ng-show="loadingTimes">
+            <div class="radio">
+              <label style="position: relative; left: -20px;">
+                Loading . . . 
+              </label>
+            </div>
+          </div>
+          <div class="workshops">
+            <div ng-hide="loadingTimes" ng-repeat="(key, time) in form.wtimes">
+              <div class="checkbox">
+                <label>
+                  <input ng-change="adminWTimeChanged(key)" type="checkbox" ng-model="time.checked" value="{{time.value}}">
+                  {{time.value}} workshop {{time.workshop}}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div ng-hide="loadingTimes" ng-repeat="(key, time) in form.times">
+            <div class="checkbox">
+              <label>
+                <input ng-change="adminTimeChanged(key)" type="checkbox" ng-model="time.checked" value="{{time.value}}">
+                {{time.value}} <span ng-bind-html="time.link"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button ng-click="adminSubmit()" type="submit" class="btn btn-primary" ng-disabled="disabled">Submit</button>
+    </div>
+  </div>
+</form>

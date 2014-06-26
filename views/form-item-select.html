@@ -1,0 +1,9 @@
+<div ng-hide="item.hide" class="form-group" ng-class="valid">
+	<label class="col-sm-3 control-label">{{item.name}}</label>
+	<div class="col-xs-6">
+		<select ng-model="item.inputValue" class="form-control">
+			<option ng-selected="selected[value]" ng-repeat="value in item.values">{{value}}</option>
+		</select>
+		<span class="help-block" ng-bind-html-unsafe="item.help"></span>
+	</div>
+</div>

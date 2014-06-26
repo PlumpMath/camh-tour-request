@@ -1,0 +1,76 @@
+<?php
+/**
+* @file
+* Custom functionality for CAH.
+*/
+
+require_once(dirname(__FILE__).'/tour_request.details.inc');
+
+function tour_request_init()
+{
+}
+
+function tour_request_perm()
+{
+	return array(
+		'manage tours',
+	);
+}
+
+function tour_request_menu()
+{
+	$items['tour-request'] = array(
+		'title' => t('Reqest a Tour'),
+		'page callback' => 'tour_request_page',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['admin/tour-request'] = array(
+		'title' => t('Administer Tours'),
+		'page callback' => 'tour_request_admin_page',
+		'access arguments' => array('manage tours'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['admin/tour-request/csv'] = array(
+		'page callback' => 'tour_request_request_csv',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/exhibition/index'] = array(
+		'page callback' => 'tour_request_exhibition_index',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/%'] = array(
+		'page callback' => 'tour_request_request_get',
+		'page arguments' => array(3),
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/all'] = array(
+		'page callback' => 'tour_request_request_all',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/index'] = array(
+		'page callback' => 'tour_request_request_index',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/set'] = array(
+		'page callback' => 'tour_request_request_set',
+		'access arguments' => array('manage tours'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/add'] = array(
+		'page callback' => 'tour_request_request_add',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['api/tour-request/request/remove'] = array(
+		'page callback' => 'tour_request_request_remove',
+		'access arguments' => array('manage tours'),
+		'type' => MENU_CALLBACK,
+	);
+	return $items;
+}

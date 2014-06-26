@@ -1,0 +1,67 @@
+<?php
+function tour_request_schema() {
+	$schema['t_request'] = array(
+		'description' => t('Table for tour requets'),
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+			),
+			'exhibition_id' => array(
+				'type' => 'int',
+				'not null' => TRUE,
+			),
+			'datetime' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'workshop' => array(
+				'type' => 'int',
+				'not null' => TRUE,
+			),
+			'admin' => array(
+				'type' => 'int',
+				'not null' => TRUE,
+			),
+			'organization_name' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'contact_name' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'telephone' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'email' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'payment' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			'misc_info' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+		),
+		'primary key' => array('id'),
+	);
+	return $schema;
+}
+
+function tour_request_install() {
+	// Create tables.
+	drupal_install_schema('tour_request');
+}
+
+function tour_request_uninstall() {
+	// Drop tables.
+	drupal_uninstall_schema('tour_request');
+}
+
+

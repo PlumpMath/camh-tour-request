@@ -1,0 +1,74 @@
+<h2>View Tour Request</h2>
+<div>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests')">Manage Requests</a></h4>
+  <h4 class="pull-left">&nbsp;|&nbsp;</h4>
+  <h4 class="pull-left"><a href ng-click="$location.path('requests/index')">Index of Requests</a></h4>
+</div>
+<hr>
+<div ng-show="r.misc_info == undefined" class="form-horizontal" role="form">
+  <h4>Loading . . . </h4>
+</div>
+<form ng-show="r.misc_info != undefined" class="form-horizontal" role="form">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Visit Information</h3>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Date:</dt> <dd>{{r.date}}</dd>
+        <dt>Exhibition:</dt> <dd>{{r.misc_info.visit.exhibition}}</dd>
+        <dt>Time:</dt> <dd>{{r.time}}</dd>
+        <dt>Group Size:</dt> <dd>{{r.misc_info.personal['Number of students']}}</dd>
+        <dt>Workshop:</dt> <dd><span ng-hide="r.workshop">No</span><span ng-show="r.workshop">Yes</span></dd>
+        <dt>Group Notes:</dt> <dd>{{r.misc_info.personal['Group Notes']}}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Admin Notes</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group" ng-class="valid">
+        <label class="col-sm-2 control-label">Tour Leader</label>
+        <div class="col-xs-6">
+          <input type="text" class="form-control" ng-model="r.misc_info.tour_leader">
+        </div>
+      </div>
+      <div class="form-group" ng-class="valid">
+        <label class="col-sm-2 control-label">Notes</label>
+        <div class="col-xs-6">
+          <textarea ng-model="r.misc_info.notes" class="form-control" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Contact Information</h3>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Organization Name:</dt> <dd>{{r.organization_name}}</dd>
+        <dt>Contact Name:</dt> <dd>{{r.contact_name}}</dd>
+        <dt>Telephone:</dt> <dd>{{r.telephone}}</dd>
+        <dt>Email:</dt> <dd>{{r.email}}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Payment Information</h3>
+    </div>
+    <div class="panel-body">
+      <p>Payment Method: {{payment_info}}</p>
+      <p ng-show="paymentNotes">Explanation: {{paymentNotes}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button ng-click="submit()" type="submit" class="btn btn-primary" ng-disabled="disabled">Submit</button>
+      <button ng-click="delete()" type="submit" class="btn btn-danger" ng-disabled="disabled">Delete</button>
+    </div>
+  </div>
+</form>

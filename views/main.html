@@ -1,0 +1,193 @@
+<div ng-show="!loaded">
+  <h4>Loading . . . </h4>
+</div>
+<form ng-show="loaded" class="form-horizontal" role="form">
+  <p>Tours led by members of the FAQTeam are $3.00 per participant; $4.00 per participant for tour and workshop. There is no fee for supervisors who accompany student groups. Title 1 schools and groups representing under-served communities may be eligible for a free tour. Please check the free tour request box in the payment section of the form.</p>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Visit Information</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group"> 
+        <label class="col-sm-3 control-label">Choose Date</label>
+        <div class="col-sm-9">
+          <div ng-change="dateChange()" ng-model="form.date">
+            <datepicker show-weeks="false"></datepicker>
+          </div>
+          <span class="help-block">Please select a date for a tour request</span>
+        </div>
+      </div>
+      <div class="row" ng-show="isMonday">
+        <p class="col-sm-3">&nbsp;</p>
+        <p class="col-sm-9">Sorry, the Museum is closed on Monday's. Please pick another date</p>
+      </div>
+      <div ng-show="!isMonday">
+        <div ng-repeat="field in form.visit">
+          <div form-item item="field" change="formChange()"></div>
+        </div>
+
+        <div class="form-group"> 
+          <label class="col-sm-3 control-label">Available Times</label>
+          <div class="col-sm-9">
+            <div ng-show="loadingTimes">
+              <div class="radio">
+                <label style="position: relative; left: -20px;">
+                  Loading . . . 
+                </label>
+              </div>
+            </div>
+            <div ng-hide="loadingTimes" ng-repeat="time in form.times">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="timeselected" ng-model="form.timeInput" value="{{time}}">
+                  {{time}} <span ng-show="noWorkshop[time]">(Workshop unavailable)</span>
+                </label>
+              </div>
+            </div>
+            <span class="help-block">{{item.help}}</span>
+          </div>
+        </div>
+        <div ng-hide="loadingTimes || noWorkshop[form.timeInput]" class="form-group"> 
+          <label class="col-sm-3 control-label">Include Workshop</label>
+          <div class="col-sm-9">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="" ng-model="form.workshop">
+                Yes
+              </label>
+            </div>
+            <span class="help-block">Notes: {{workshopNotes}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Personal Information</h3>
+    </div>
+    <div class="panel-body">
+      <div ng-repeat="field in form.personal">
+        <div form-item item="field" change="formChange()"></div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">About Your Group</label>
+        <div class="col-xs-6">
+          <textarea ng-model="form.groupNotes" class="form-control" rows="3"></textarea>
+          <span class="help-block">Please let us know if your group has special requirements, accessibility needs, or any other information that we may need to help facilitate your tour.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Payment Information</h3>
+    </div>
+    <div class="panel-body">
+      <p>Group tours require a feee that must be received at least two weeks in advance of your scheduled tour date. Please choose a payment option below.</p>
+      <div class="form-group" ng-class="">
+        <label for="" class="col-sm-3 control-label">Number of Students</label>
+        <div class="col-xs-4">
+          <input type="text" class="form-control" id="" ng-model="form.numberGroup" placeholder="">
+        </div>
+      </div>
+      <div class="form-group"> 
+        <label class="col-sm-3 control-label">Payment Options</label>
+        <div class="col-sm-9">
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentSelected" ng-model="form.paymentOption" value="1">
+                Pay full tour fee online -- ${{total}}
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentSelected" ng-model="form.paymentOption" value="2">
+                Pay tour deposit only online -- ${{deposit}}
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentSelected" ng-model="form.paymentOption" value="3">
+                Pay by Check
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentSelected" ng-model="form.paymentOption" value="4">
+                Request a free tour
+              </label>
+            </div>
+          </div>
+      </div>
+      <div ng-show="form.paymentOption == 4" class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Explanation</label>
+        <div class="col-xs-6">
+          <textarea ng-model="form.paymentInfo" class="form-control" rows="3"></textarea>
+          <span class="help-block">Please give us information to help us determine if your group qualifies for a free tour, i.e.: Title 1 school, special needs group, etc</span>
+        </div>
+      </div>
+      <!--
+      <div class="form-group">
+        <label for="card-type" class="col-sm-3 control-label">Card Type</label>
+        <div class="col-xs-4">
+          <select class="form-control" ng-model="form.creditCard.type">
+            <option>American Express</option>
+            <option>VISA</option>
+            <option>MasterCard</option>
+            <option>Discover</option>
+          </select>
+        </div>
+      </div>
+      -->
+      <div ng-show="form.paymentOption < 3">
+        <div class="form-group" ng-class="ccValid">
+          <label for="other-amount" class="col-sm-3 control-label">Card Number</label>
+          <div class="col-xs-4">
+            <input type="text" class="form-control" id="card-number" ng-model="form.creditCard.number" placeholder="">
+          </div>
+        </div>
+        <div class="form-group" ng-class="ccValid">
+          <label for="card-type" class="col-sm-3 control-label">Expirate Date</label>
+          <div class="col-xs-2">
+            <select class="form-control" ng-model="form.creditCard.month">
+              <option>01</option>
+              <option>02</option>
+              <option>03</option>
+              <option>04</option>
+              <option>05</option>
+              <option>06</option>
+              <option>07</option>
+              <option>08</option>
+              <option>09</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <select class="form-control" ng-model="form.creditCard.year">
+              <option>2014</option>
+              <option>2015</option>
+              <option>2016</option>
+              <option>2017</option>
+              <option>2018</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" ng-class="ccValid">
+          <label for="other-amount" class="col-sm-3 control-label">CVV</label>
+          <div class="col-xs-4">
+            <input type="text" class="form-control" id="card-number" placeholder="" ng-model="form.creditCard.cvv">
+            <span class="help-block"><a href="http://www.cvvnumber.com/cvv.html" target="_blank" style="font-size:11px">What is a CVV code?</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button ng-click="validate()" type="submit" class="btn btn-primary" ng-disabled="disabled">Submit</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,37 @@
+<h3>View Charges</h3>
+<form ng-submit="submit" class="form-horizontal" role="form">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Login Information</h3>
+	</div>
+	<BR>
+	<div class="form-group">
+		<label for="other-amount" class="col-sm-3 control-label">Password</label>
+		<div class="col-xs-4">
+			<input type="text" class="form-control" ng-model="password" placeholder="">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button ng-click="submit()" type="submit" class="btn btn-default" ng-disabled="disabled">Submit</button>
+		</div>
+	</div>
+</div>
+<hr>
+</form>
+<div class="panel panel-default" ng-repeat="charge in charges | orderBy:'stripe.created':true">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{charge.stripe.charge_id}} &nbsp;&nbsp;<a target="_blank" ng-href="https://manage.stripe.com/test/payments/{{charge.charge_id}}">(stripe link)</a></h3>
+	</div>
+	<BR>
+	<div class="col-sm-offset-1">
+		<dl class="dl-horizontal">
+			<dt>Date</dt>
+			<dd>{{convertDate(charge.stripe.created)}}<dd>
+		</dl>
+		<dl class="dl-horizontal" ng-repeat="(key, value) in charge.values">
+			<dt>{{value.key}}</dt>
+			<dd>{{value.value}}<dd>
+		</dl>
+	</div>
+</div>

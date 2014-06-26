@@ -1,0 +1,18 @@
+<h3>Thank you!</h3>
+<form ng-submit="submit" class="form-horizontal" role="form">
+<div class="panel panel-default" ng-repeat="charge in charges">
+	<div class="panel-heading">
+		<h3 class="panel-title">Receipt: {{charge.stripe.charge_id}}</h3>
+	</div>
+	<BR>
+	<div class="col-sm-offset-1">
+		<dl class="dl-horizontal">
+			<dt>Date</dt>
+			<dd>{{convertDate(charge.stripe.created)}}<dd>
+		</dl>
+		<dl class="dl-horizontal" ng-repeat="(key, value) in charge.values">
+			<dt>{{value.key}}</dt>
+			<dd>{{value.value}}<dd>
+		</dl>
+	</div>
+</div>

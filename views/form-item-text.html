@@ -1,0 +1,7 @@
+<div ng-hide="item.hide" class="form-group" ng-class="valid">
+	<label class="col-sm-3 control-label">{{item.name}}</label>
+	<div class="col-xs-6">
+		<input type="text" class="form-control" ng-model="item.inputValue" placeholder="{{item.placeholder}}">
+		<span class="help-block" ng-bind-html-unsafe="item.help"></span>
+	</div>
+</div>
